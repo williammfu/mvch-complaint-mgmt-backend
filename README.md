@@ -3,10 +3,10 @@ Complaint management backend server for MongoDB database
 
 ## To do
 - [x] Login endpoint
-- [ ] Configure JWT
+- [x] Configure JWT
 - [ ] Hash password
-- [ ] Register user
-- [ ] Middleware (check user login)
+- [x] Register user
+- [x] Middleware (check user login)
 - [ ] Check user type
 
 ## Prerequisite
