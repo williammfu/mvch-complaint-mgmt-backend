@@ -8,7 +8,7 @@ const jwtSecret: string = process.env.JWT_SECRET || "MVCH"
 
 export default function (req: Request & Payload, res: Response, next: NextFunction) {
   try {
-    const bearer = req.header("bearer")
+    const bearer = req.header("x-auth-token")
     if (!bearer) {
       return res
         .status(STATUS_CODE.UNAUTHORIZED)
