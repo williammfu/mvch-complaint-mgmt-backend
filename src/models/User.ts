@@ -1,4 +1,20 @@
-import mongoose from "mongoose"
+import mongoose, { Schema, Types } from "mongoose"
+
+export type UserType = {
+  email: string,
+  password: string,
+  fullName: string,
+  role: string,
+  road: string,
+  number: string,
+  city: string,
+  province: string,
+  country: string,
+  phoneNum: string,
+  token: string, // token string
+  lastLoginAt: Date, // login timestamp
+  complaints: [{ type: Types.ObjectId }]
+}
 
 const UserSchema = new mongoose.Schema({
   email: String,
@@ -12,10 +28,10 @@ const UserSchema = new mongoose.Schema({
   country: String,
   phoneNum: String,
   token: String, // token string
-  lastLoginAt: Date, // login timestamp
+  lastLoginAt: Schema.Types.Date, // login timestamp
   complaints: [{ type: mongoose.Types.ObjectId }]
 })
 
 const User = mongoose.model('User', UserSchema);
 
-module.exports = User
+export default User

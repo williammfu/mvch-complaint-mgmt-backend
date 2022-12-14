@@ -23,4 +23,4 @@ const ComplaintSchema = new mongoose.Schema({
 
 const Complaint = mongoose.model('Complaint', ComplaintSchema)
 
-module.exports = Complaint
+export default Complaint
