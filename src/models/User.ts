@@ -11,8 +11,8 @@ export type UserType = {
   province: string,
   country: string,
   phoneNum: string,
-  token: string, // token string
-  lastLoginAt: Date, // login timestamp
+  // token: string, // token string
+  // lastLoginAt: Date, // login timestamp
   complaints: [{ type: Types.ObjectId }]
 }
 

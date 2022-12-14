@@ -2,7 +2,7 @@ import dotenv from "dotenv"
 import express from "express"
 import conn from "./data"
 
-import auth from "./routes/auth"
+import user from "./routes/user"
 
 dotenv.config()
 
@@ -11,8 +11,8 @@ async function main() {
   const app = express()
   const port = process.env.PORT || 3000
 
-  app.get("/", (req, res) => res.send("Guguk guguk 🐶🐕🐕‍🦺🐩"))
-  app.use("/auth", auth)
+  app.get("/", (_, res) => res.send("Guguk guguk 🐶🐕🐕‍🦺🐩"))
+  app.use("/user", user)
 
   // Start server
   app.listen(port, () => {
