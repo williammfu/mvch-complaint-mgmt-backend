@@ -3,20 +3,22 @@ import { Payload, STATUS_CODE } from '../constants'
 import User from '../models/User'
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
+import { MyRequest } from './types'
 
 dotenv.config()
 const jwtSecret: string = process.env.JWT_SECRET || "MVCH"
 const jwtExpiration: string = process.env.JWT_EXPIRATION || "1 day"
 
-export const login = async (req: Request, res: Response) => {
+export const login = async (req: MyRequest<{ email: string, password: string }>, res: Response) => {
   try {
     const {
       email,
       password
     } = req.body
+
     const user = await User.findOne({ email })
     if (!user) {
-      res
+      return res
         .status(STATUS_CODE.BAD_REQUEST)
         .json({
           ok: false,
@@ -24,10 +26,10 @@ export const login = async (req: Request, res: Response) => {
         })
     }
 
-    // TODO: use bcrypt
+    // // TODO: use bcrypt
     const isMatch = user?.password == password
     if (!isMatch) {
-      res
+      return res
         .status(STATUS_CODE.BAD_REQUEST)
         .json({
           ok: false,
@@ -51,7 +53,7 @@ export const login = async (req: Request, res: Response) => {
 
   } catch (err) {
     console.error((err as Error).message)
-    res.status(STATUS_CODE.SERVER_ERROR).send({ ok: false, message: 'Server error' })
+    res.status(STATUS_CODE.SERVER_ERROR).json({ ok: false, message: 'Server error' })
   }
 }
 
