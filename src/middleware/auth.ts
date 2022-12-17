@@ -1,27 +1,28 @@
 import { NextFunction, Request, Response } from "express"
 import jwt from "jsonwebtoken"
 import dotenv from "dotenv"
-import { Payload, STATUS_CODE } from "src/constants"
+import { Payload, STATUS_CODE } from "../constants"
 
 dotenv.config()
 const jwtSecret: string = process.env.JWT_SECRET || "MVCH"
 
-export default function (req: Request & Payload, res: Response, next: NextFunction) {
+const auth = (req: Request, res: Response, next: NextFunction): void => {
   try {
-    const bearer = req.header("x-auth-token")
+    const bearer = req.header("Authorization")
     if (!bearer) {
-      return res
+      res
         .status(STATUS_CODE.UNAUTHORIZED)
         .json({
           ok: false,
           message: "Unauthorized"
         })
+      return
     }
 
     const token = bearer.split(" ")[1]
 
     const payload: Payload = { userId: jwt.verify(token, jwtSecret) as string }
-    req.userId = payload.userId
+    req.body.userId = payload.userId
     next()
   } catch (err) {
     res
@@ -32,3 +33,5 @@ export default function (req: Request & Payload, res: Response, next: NextFuncti
       })
   }
 }
+
+export default auth

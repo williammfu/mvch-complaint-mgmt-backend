@@ -2,12 +2,14 @@ import { Request, Response } from 'express'
 import { Payload, STATUS_CODE } from '../constants'
 import User from '../models/User'
 import jwt from 'jsonwebtoken'
+import bcrypt from 'bcrypt'
 import dotenv from 'dotenv'
 import { MyRequest } from './types'
 
 dotenv.config()
 const jwtSecret: string = process.env.JWT_SECRET || "MVCH"
 const jwtExpiration: string = process.env.JWT_EXPIRATION || "1 day"
+const saltRounds: number = parseInt(process.env.BCRYPT_SALT || "123")
 
 export const login = async (req: MyRequest<{ email: string, password: string }>, res: Response) => {
   try {
@@ -26,8 +28,7 @@ export const login = async (req: MyRequest<{ email: string, password: string }>,
         })
     }
 
-    // // TODO: use bcrypt
-    const isMatch = user?.password == password
+    const isMatch = bcrypt.compareSync(password, user.password!)
     if (!isMatch) {
       return res
         .status(STATUS_CODE.BAD_REQUEST)
@@ -47,7 +48,7 @@ export const login = async (req: MyRequest<{ email: string, password: string }>,
       { expiresIn: jwtExpiration },
       (err, token) => {
         if (err) throw err;
-        res.status(STATUS_CODE.OK).json({ token });
+        res.status(STATUS_CODE.OK).json({ ok: true, token });
       }
     )
 
@@ -80,10 +81,12 @@ export const register = async (req: Request, res: Response) => {
       })
     }
 
-    // TODO: bcrypt here?
+    const salt = bcrypt.genSaltSync(saltRounds)
+    const hashed = bcrypt.hashSync(password, salt)
+
     const userFields = {
       email,
-      password,
+      password: hashed,
       fullName,
       role,
       road,
@@ -106,7 +109,7 @@ export const register = async (req: Request, res: Response) => {
       { expiresIn: jwtExpiration },
       (err, token) => {
         if (err) throw err;
-        res.json({ token });
+        res.json({ ok: true, token });
       }
     )
 
