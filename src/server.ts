@@ -5,6 +5,8 @@ import morgan from "morgan"
 import conn from "./data"
 
 import user from "./routes/user"
+import hospital from "./routes/hospital"
+import complaint from "./routes/complaint"
 
 dotenv.config()
 
@@ -20,6 +22,8 @@ async function main() {
 
   app.get("/", (_, res) => res.send("Guguk guguk 🐶🐕🐕‍🦺🐩"))
   app.use("/user", user)
+  app.use("/hospital", hospital)
+  app.use("/complaint", complaint)
 
   // Start server
   app.listen(port, () => {
