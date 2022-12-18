@@ -5,7 +5,7 @@ import Hospital from "../models/Hospital"
 export const getAllHospital = async (req:Request, res:Response) => {
   try{
       const hospitals = await Hospital.find()
-      res.status(STATUS_CODE.OK).json({response:hospitals})
+      return res.status(STATUS_CODE.OK).json({response:hospitals})
   }catch(e){
       console.error((e as Error).message)
       res.status(STATUS_CODE.SERVER_ERROR).json({ ok: false, message: 'Server error' })
@@ -14,7 +14,6 @@ export const getAllHospital = async (req:Request, res:Response) => {
 
 export const insertOneHospital = async (req:Request, res:Response) => {
   try{
-
     const hospitalFields = {
       location: req.body.location,
       name: req.body.name,
@@ -22,7 +21,7 @@ export const insertOneHospital = async (req:Request, res:Response) => {
     }
     const newhospital = new Hospital(hospitalFields)
     const mongoresponse = await newhospital.save()
-    res.status(STATUS_CODE.OK).json({response:mongoresponse})
+    return res.status(STATUS_CODE.OK).json({response:mongoresponse})
 
   }catch(e){
       console.error((e as Error).message)
