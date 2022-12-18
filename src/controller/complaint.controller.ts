@@ -69,3 +69,43 @@ export const getComplaintsById = async (req: Request, res: Response) => {
     res.status(STATUS_CODE.SERVER_ERROR).json({ ok: false, message: 'Server error' })
   }
 }
+
+export const updateComplaintsById = async (req: Request, res: Response) => {
+  try{
+    const id = req.params.id
+    const complaint = await Complaint.findOneAndUpdate({_id:id}, req.body)
+    if (!complaint) {
+      return res
+        .status(STATUS_CODE.BAD_REQUEST)
+        .json({
+          ok: false,
+          message: 'Complaint not found'
+        })
+    }
+
+    return res.status(STATUS_CODE.OK).json({response:complaint})
+  }catch(e){
+    console.error((e as Error).message)
+    res.status(STATUS_CODE.SERVER_ERROR).json({ ok: false, message: 'Server error' })
+  } 
+}
+
+export const deleteComplaintsById = async (req: Request, res: Response) => {
+  try{
+    const id = req.params.id
+    const complaint = await Complaint.findByIdAndDelete({_id:id})
+    if (!complaint) {
+      return res
+        .status(STATUS_CODE.BAD_REQUEST)
+        .json({
+          ok: false,
+          message: 'Complaint not found'
+        })
+    }
+
+    return res.status(STATUS_CODE.OK).json({response:complaint})
+  }catch(e){
+    console.error((e as Error).message)
+    res.status(STATUS_CODE.SERVER_ERROR).json({ ok: false, message: 'Server error' })
+  } 
+}
