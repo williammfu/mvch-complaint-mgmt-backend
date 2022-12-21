@@ -13,7 +13,6 @@ export const insertOneComplaint = async (req: Request, res: Response) => {
       createdAt,
       description,
       files,
-      complainReplies,
       status
     } = req.body
 
@@ -26,7 +25,7 @@ export const insertOneComplaint = async (req: Request, res: Response) => {
       createdAt,
       description,
       files,
-      complainReplies,
+      complainReplies: [],
       status
     }
 

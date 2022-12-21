@@ -8,8 +8,8 @@ router.post('/', insertOneComplaint)
 router.get('/', getAllComplaints)
 router.get('/:id', getComplaintsById)
 
-router.put('/update/:id', updateComplaintsById)
+router.put('/:id', updateComplaintsById)
 
-router.delete('/delete/:id', deleteComplaintsById)
+router.delete('/:id', deleteComplaintsById)
 
 export default router
