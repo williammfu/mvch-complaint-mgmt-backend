@@ -61,6 +61,24 @@ export const login = async (req: MyRequest<{ email: string, password: string }>,
   }
 }
 
+export const logout = async (req: Request, res: Response) => {
+  try {
+    const token = req.header("Authorization")
+    jwt.sign(
+      { token },
+      jwtSecret,
+      { expiresIn: 1 },
+      (err, token) => {
+        if (err) throw err;
+        res.json({ ok: true, token })
+      }
+    )
+  } catch (err) {
+    console.error((err as Error).message)
+    res.status(STATUS_CODE.SERVER_ERROR).send({ ok: false, message: (err as Error).message })
+  }
+}
+
 export const register = async (req: Request, res: Response) => {
   try {
     const {

@@ -10,7 +10,7 @@ const ResponseSchema = new mongoose.Schema({
 
 const ComplaintSchema = new mongoose.Schema({
   nameAffected: String,
-  sender: mongoose.Types.ObjectId,
+  sender: String,
   selfAffected: { type: String, enum: ['yes', 'no'] },
   hospitalName: String,
   facility: String,
