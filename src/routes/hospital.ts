@@ -4,7 +4,7 @@ import { getAllHospital, insertOneHospital } from "../controller/hospital.contro
 
 const router = Router()
 
-router.get('/get',getAllHospital)
-router.post('/insert-one', insertOneHospital)
+router.get('/',getAllHospital)
+router.post('/', insertOneHospital)
 
 export default router
