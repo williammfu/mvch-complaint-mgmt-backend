@@ -48,7 +48,7 @@ export const login = async (req: MyRequest<{ email: string, password: string }>,
       { expiresIn: jwtExpiration },
       (err, token) => {
         if (err) throw err;
-        res.status(STATUS_CODE.OK).json({ ok: true, token });
+        res.status(STATUS_CODE.OK).json({ ok: true, name: user.fullName, role: user.role, token });
       }
     )
 
@@ -64,7 +64,7 @@ export const register = async (req: Request, res: Response) => {
       email,
       password,
       fullName,
-      role,
+      role = "USER",
       road,
       number,
       city,
@@ -109,7 +109,7 @@ export const register = async (req: Request, res: Response) => {
       { expiresIn: jwtExpiration },
       (err, token) => {
         if (err) throw err;
-        res.json({ ok: true, token });
+        res.json({ ok: true, name: fullName, role, token });
       }
     )
 
