@@ -3,10 +3,10 @@ import { insertOneComplaint, getAllComplaints, getComplaintsById, updateComplain
 
 const router = Router()
 
-router.post('/insert-one', insertOneComplaint)
+router.post('/', insertOneComplaint)
 
-router.get('/get', getAllComplaints)
-router.get('/get/:id', getComplaintsById)
+router.get('/', getAllComplaints)
+router.get('/:id', getComplaintsById)
 
 router.put('/update/:id', updateComplaintsById)
 

@@ -3,7 +3,7 @@ import { STATUS_CODE } from '../constants'
 import Complaint from '../models/Complaint'
 
 export const insertOneComplaint = async (req: Request, res: Response) => {
-  try{
+  try {
     const {
       nameAffected,
       sender,
@@ -32,26 +32,26 @@ export const insertOneComplaint = async (req: Request, res: Response) => {
 
     const newComplaint = new Complaint(complaintFields)
     const mongoresponse = await newComplaint.save()
-    return res.status(STATUS_CODE.OK).json({response:mongoresponse})
+    return res.status(STATUS_CODE.OK).json({ response: mongoresponse })
 
-  }catch(e){
-      console.error((e as Error).message)
-      res.status(STATUS_CODE.SERVER_ERROR).json({ ok: false, message: 'Server error' })
+  } catch (e) {
+    console.error((e as Error).message)
+    res.status(STATUS_CODE.SERVER_ERROR).json({ ok: false, message: 'Server error' })
   }
 }
 
 export const getAllComplaints = async (req: Request, res: Response) => {
-  try{
-    const complaints = await Complaint.find()
-    return res.status(STATUS_CODE.OK).json({response:complaints})
-  }catch(e){
+  try {
+    const complaints = await Complaint.find({}, '_id createdAt nameAffected hospitalName facility description status')
+    return res.status(STATUS_CODE.OK).json({ ok: true, response: complaints })
+  } catch (e) {
     console.error((e as Error).message)
     res.status(STATUS_CODE.SERVER_ERROR).json({ ok: false, message: 'Server error' })
   }
 }
 
 export const getComplaintsById = async (req: Request, res: Response) => {
-  try{
+  try {
     const id = req.params.id
     const complaint = await Complaint.findById(id)
     if (!complaint) {
@@ -63,17 +63,17 @@ export const getComplaintsById = async (req: Request, res: Response) => {
         })
     }
 
-    return res.status(STATUS_CODE.OK).json({response:complaint})
-  }catch(e){
+    return res.status(STATUS_CODE.OK).json({ response: complaint })
+  } catch (e) {
     console.error((e as Error).message)
     res.status(STATUS_CODE.SERVER_ERROR).json({ ok: false, message: 'Server error' })
   }
 }
 
 export const updateComplaintsById = async (req: Request, res: Response) => {
-  try{
+  try {
     const id = req.params.id
-    const complaint = await Complaint.findOneAndUpdate({_id:id}, req.body)
+    const complaint = await Complaint.findOneAndUpdate({ _id: id }, req.body)
     if (!complaint) {
       return res
         .status(STATUS_CODE.BAD_REQUEST)
@@ -83,17 +83,17 @@ export const updateComplaintsById = async (req: Request, res: Response) => {
         })
     }
 
-    return res.status(STATUS_CODE.OK).json({response:complaint})
-  }catch(e){
+    return res.status(STATUS_CODE.OK).json({ response: complaint })
+  } catch (e) {
     console.error((e as Error).message)
     res.status(STATUS_CODE.SERVER_ERROR).json({ ok: false, message: 'Server error' })
-  } 
+  }
 }
 
 export const deleteComplaintsById = async (req: Request, res: Response) => {
-  try{
+  try {
     const id = req.params.id
-    const complaint = await Complaint.findByIdAndDelete({_id:id})
+    const complaint = await Complaint.findByIdAndDelete({ _id: id })
     if (!complaint) {
       return res
         .status(STATUS_CODE.BAD_REQUEST)
@@ -103,9 +103,9 @@ export const deleteComplaintsById = async (req: Request, res: Response) => {
         })
     }
 
-    return res.status(STATUS_CODE.OK).json({response:complaint})
-  }catch(e){
+    return res.status(STATUS_CODE.OK).json({ response: complaint })
+  } catch (e) {
     console.error((e as Error).message)
     res.status(STATUS_CODE.SERVER_ERROR).json({ ok: false, message: 'Server error' })
-  } 
+  }
 }
