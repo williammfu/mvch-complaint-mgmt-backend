@@ -27,7 +27,6 @@ const UserSchema = new mongoose.Schema({
   province: String,
   country: String,
   phoneNum: String,
-  token: String, // token string
   lastLoginAt: Schema.Types.Date, // login timestamp
   complaints: [{ type: mongoose.Types.ObjectId }]
 })

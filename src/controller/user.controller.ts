@@ -42,6 +42,9 @@ export const login = async (req: MyRequest<{ email: string, password: string }>,
       userId: user!._id.toString()
     }
 
+    user.lastLoginAt = new Date()
+    await user.save()
+
     jwt.sign(
       payload,
       jwtSecret,
@@ -94,7 +97,8 @@ export const register = async (req: Request, res: Response) => {
       city,
       province,
       country,
-      phoneNum
+      phoneNum,
+      lastLoginAt: null
     }
     user = new User(userFields)
     await user.save()
