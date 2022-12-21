@@ -2,7 +2,7 @@ import mongoose from "mongoose"
 
 const conn = async () => {
   try {
-    const uri = process.env.MONGODB_URI || "mongodb"
+    const uri = process.env.MONGODB_URI || "mongodb://localhost:27017/mvch"
     mongoose.set('strictQuery', false)
     await mongoose.connect(uri)
     console.log('[MVCH] MongoDB connected!')
