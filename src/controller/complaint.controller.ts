@@ -14,7 +14,8 @@ export const insertOneComplaint = async (req: Request, res: Response) => {
       createdAt,
       description,
       files,
-      status
+      status,
+      type
     } = req.body
 
     const complaintFields = {
@@ -27,7 +28,8 @@ export const insertOneComplaint = async (req: Request, res: Response) => {
       description,
       files,
       complainReplies: [],
-      status
+      status,
+      type
     }
 
     const newComplaint = new Complaint(complaintFields)

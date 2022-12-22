@@ -14,7 +14,8 @@ const mockComplaints = [
     description: 'I had an unpleasant experience during my treatment. My radiologist seemed inexperienced',
     files: null,
     complainReplies: [],
-    status: 'resolved'
+    status: 'resolved',
+    type: 'unsatisfactory service'
   },
   {
     nameAffected: 'John Doe',
@@ -26,7 +27,8 @@ const mockComplaints = [
     description: 'The ambulance driver did not drive safely despite the empty road, which hinders the ER procedure inside the ambulance',
     files: null,
     complainReplies: [],
-    status: 'resolved'
+    status: 'resolved',
+    type: 'other'
   },
   {
     nameAffected: 'William Fu',
@@ -38,7 +40,8 @@ const mockComplaints = [
     description: 'I received the wrong dosage of medicine.',
     files: null,
     complainReplies: [],
-    status: 'unresolved'
+    status: 'unresolved',
+    type: 'misdiagnosis'
   },
   {
     nameAffected: 'Anindya P',
@@ -50,7 +53,8 @@ const mockComplaints = [
     description: 'My dental hygenist did not perform their job properly. I had a scar under my tounge from the tools.',
     files: null,
     complainReplies: [],
-    status: 'unresolved'
+    status: 'unresolved',
+    type: 'other'
   },
   {
     nameAffected: 'Jane Doe',
@@ -68,7 +72,8 @@ const mockComplaints = [
       createdAt: new Date(),
       content: 'On behalf of the staff, we express our apology. We will look into it shortly. Could we know when was the procedure performed?'
     }],
-    status: 'checking'
+    status: 'checking',
+    type: 'other'
   }
 ]
 

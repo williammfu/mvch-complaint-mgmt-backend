@@ -18,7 +18,8 @@ const ComplaintSchema = new mongoose.Schema({
   description: String,
   files: Buffer,
   complainReplies: [{ type: ResponseSchema }],
-  status: String
+  status: String,
+  type: String
 })
 
 const Complaint = mongoose.model('Complaint', ComplaintSchema)
