@@ -1,11 +1,11 @@
-import mongoose from "mongoose"
+import mongoose, { Schema } from "mongoose"
 
 const ResponseSchema = new mongoose.Schema({
-  senderId: mongoose.Types.ObjectId,
+  senderId: Schema.Types.ObjectId,
   content: String,
   senderName: String,
   senderRole: { type: String, enum: ['ADMIN', 'USER'] },
-  createdAt: { type: Date, default: Date.now }
+  createdAt: { type: Date }
 })
 
 const ComplaintSchema = new mongoose.Schema({

@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import mongoose, { Schema } from 'mongoose'
 import { STATUS_CODE } from '../constants'
 import Complaint from '../models/Complaint'
 
@@ -110,17 +111,17 @@ export const deleteComplaintsById = async (req: Request, res: Response) => {
 }
 
 export const updateComplaintStatusById = async (req: Request, res: Response) => {
-  try{
+  try {
     const status = req.body.status
     const id = req.params.id
-    if (!status){
+    if (!status) {
       return res.status(STATUS_CODE.BAD_REQUEST).json({
         ok: false,
         message: "need status on request"
-      })      
+      })
     }
 
-    const complaint = await Complaint.findOneAndUpdate({ _id: id }, {status:status})
+    const complaint = await Complaint.findOneAndUpdate({ _id: id }, { status: status })
     if (!complaint) {
       return res
         .status(STATUS_CODE.BAD_REQUEST)
@@ -131,8 +132,49 @@ export const updateComplaintStatusById = async (req: Request, res: Response) => 
     }
 
     return res.status(STATUS_CODE.OK).json({ response: complaint })
-  }catch (e){
+  } catch (e) {
     console.error((e as Error).message)
+    res.status(STATUS_CODE.SERVER_ERROR).json({ ok: false, message: 'Server error' })
+  }
+}
+
+export const replyComplaint = async (req: Request, res: Response) => {
+  try {
+    const {
+      senderName,
+      senderRole,
+      content,
+      reqUserId: {
+        userId
+      }
+    } = req.body
+    const id = req.params.id
+
+    const complaint = await Complaint.findById({ _id: id })
+
+    if (!complaint) {
+      return res
+        .status(STATUS_CODE.BAD_REQUEST)
+        .json({
+          ok: false,
+          message: 'Complaint not found'
+        })
+    }
+
+    complaint?.complainReplies.push({
+      senderId: new mongoose.Types.ObjectId(userId),
+      senderName,
+      senderRole,
+      content,
+      createdAt: new Date()
+    })
+    await complaint.save()
+
+    return res.status(STATUS_CODE.OK).json({ response: complaint })
+
+  } catch (e) {
+    console.log(e)
+    console.error('Reply complaint: ', (e as Error).message)
     res.status(STATUS_CODE.SERVER_ERROR).json({ ok: false, message: 'Server error' })
   }
 }

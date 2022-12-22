@@ -22,7 +22,7 @@ const auth = (req: Request, res: Response, next: NextFunction): void => {
     const token = bearer.split(" ")[1]
 
     const payload: Payload = { userId: jwt.verify(token, jwtSecret) as string }
-    req.body.userId = payload.userId
+    req.body.reqUserId = payload.userId
     next()
   } catch (err) {
     res
