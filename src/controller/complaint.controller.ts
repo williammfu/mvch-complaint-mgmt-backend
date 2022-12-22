@@ -108,3 +108,31 @@ export const deleteComplaintsById = async (req: Request, res: Response) => {
     res.status(STATUS_CODE.SERVER_ERROR).json({ ok: false, message: 'Server error' })
   }
 }
+
+export const updateComplaintStatusById = async (req: Request, res: Response) => {
+  try{
+    const status = req.body.status
+    const id = req.params.id
+    if (!status){
+      return res.status(STATUS_CODE.BAD_REQUEST).json({
+        ok: false,
+        message: "need status on request"
+      })      
+    }
+
+    const complaint = await Complaint.findOneAndUpdate({ _id: id }, {status:status})
+    if (!complaint) {
+      return res
+        .status(STATUS_CODE.BAD_REQUEST)
+        .json({
+          ok: false,
+          message: 'Complaint not found'
+        })
+    }
+
+    return res.status(STATUS_CODE.OK).json({ response: complaint })
+  }catch (e){
+    console.error((e as Error).message)
+    res.status(STATUS_CODE.SERVER_ERROR).json({ ok: false, message: 'Server error' })
+  }
+}
