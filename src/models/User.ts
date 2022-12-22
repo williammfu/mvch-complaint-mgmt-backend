@@ -11,8 +11,6 @@ export type UserType = {
   province: string,
   country: string,
   phoneNum: string,
-  // token: string, // token string
-  // lastLoginAt: Date, // login timestamp
   complaints: [{ type: Types.ObjectId }]
 }
 
@@ -28,7 +26,7 @@ const UserSchema = new mongoose.Schema({
   country: String,
   phoneNum: String,
   lastLoginAt: Schema.Types.Date, // login timestamp
-  complaints: [{ type: mongoose.Types.ObjectId }]
+  complaints: [{ type: Schema.Types.ObjectId }]
 })
 
 const User = mongoose.model('User', UserSchema);

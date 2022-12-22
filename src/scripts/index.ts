@@ -1,6 +1,7 @@
 import { insertHospitals } from "./hospitals";
 import { insertUsers } from "./users";
 import conn from "../data";
+import { insertComplaints } from "./complaints";
 
 conn()
   .then(x => {
@@ -13,6 +14,10 @@ conn()
   })
   .then(x => {
     console.log("User data loaded")
+    return insertComplaints(x!)
+  })
+  .then(x => {
+    console.log("Complaint data loaded")
     process.exit()
   })
   .catch(err => {
